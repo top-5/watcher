@@ -50,6 +50,17 @@ const listTopLevelDirectory = (dir) => {
     });
 };
 
+// Check if the target storage directory exists, if not, attempt to create it
+if (!fs.existsSync(WATCH_DIR)) {
+    try {
+        fs.mkdirSync(WATCH_DIR, { recursive: true });
+        console.log(`[INFO] Created directory: ${WATCH_DIR}`);
+    } catch (err) {
+        console.error(`[ERROR] Failed to create directory: ${WATCH_DIR}`, err);
+        process.exit(1);
+    }
+}
+
 if (isDirectoryEmpty(WATCH_DIR) || !isGitRepo(WATCH_DIR)) {
     initializeGitRepo();
 }
