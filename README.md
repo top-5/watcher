@@ -36,12 +36,42 @@ The configuration is read from a `config.json` file located in the same director
 
 1. **Build the Docker Image**:
     ```sh
-    ./Run-Docker.ps1
+    docker build -t watcher-autogit .
     ```
 
 2. **Run the Docker Container**:
     ```sh
-    ./Run-Docker.ps1
+    docker run -v $(pwd)/storage:/app/storage watcher-autogit
+    ```
+
+### Using Docker from GitHub Repository
+
+1. **Clone the Repository**:
+    ```sh
+    git clone https://github.com/top-5/watcher.git
+    cd watcher
+    ```
+
+2. **Build the Docker Image**:
+    ```sh
+    docker build -t watcher-autogit .
+    ```
+
+3. **Run the Docker Container**:
+    ```sh
+    docker run -v $(pwd)/storage:/app/storage watcher-autogit
+    ```
+
+### Using Docker with Direct GitHub Build
+
+1. **Build the Docker Image**:
+    ```sh
+    docker build https://github.com/top-5/watcher.git#main -t my-image
+    ```
+
+2. **Run the Docker Container**:
+    ```sh
+    docker run -v $(pwd)/storage:/app/storage my-image
     ```
 
 **Note**: For WSL2 Docker, the project relies on periodic polling instead of file I/O watch because polling on WSL2 Docker is not working correctly.
